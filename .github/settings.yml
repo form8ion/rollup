@@ -1,0 +1,6 @@
+_extends: .github
+repository:
+  name: rollup
+  description: form8ion plugin for managing rollup configuration in javascript projects
+  homepage: https://npm.im/@form8ion/rollup
+  private: false
