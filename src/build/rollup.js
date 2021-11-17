@@ -1,10 +1,9 @@
 import {promises as fs} from 'fs';
 import deepmerge from 'deepmerge';
 import {dialects, projectTypes} from '@form8ion/javascript-core';
-import determinePathToTemplateFile from '../template-path';
 
 export async function scaffold({projectRoot, dialect, projectType}) {
-  await fs.copyFile(determinePathToTemplateFile('rollup.config.js'), `${projectRoot}/rollup.config.js`);
+  await fs.copyFile('../../templates/rollup.config.js', `${projectRoot}/rollup.config.js`);
 
   return deepmerge.all([
     {

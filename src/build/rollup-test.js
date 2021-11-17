@@ -3,7 +3,6 @@ import {dialects, projectTypes} from '@form8ion/javascript-core';
 import {assert} from 'chai';
 import sinon from 'sinon';
 import any from '@travi/any';
-import * as templatePath from '../template-path';
 import {scaffold} from './rollup';
 
 suite('rollup', () => {
@@ -14,21 +13,17 @@ suite('rollup', () => {
     sandbox = sinon.createSandbox();
 
     sandbox.stub(fs, 'copyFile');
-    sandbox.stub(templatePath, 'default');
   });
 
   teardown(() => sandbox.restore());
 
   test('that rollup is configured', async () => {
-    const pathToRollupTemplate = any.string();
-    templatePath.default.withArgs('rollup.config.js').returns(pathToRollupTemplate);
-
     const {devDependencies, scripts} = await scaffold({projectRoot});
 
     assert.equal(scripts['build:js'], 'rollup --config');
     assert.equal(scripts.watch, 'run-s \'build:js -- --watch\'');
     assert.deepEqual(devDependencies, ['rollup', 'rollup-plugin-auto-external']);
-    assert.calledWith(fs.copyFile, pathToRollupTemplate, `${projectRoot}/rollup.config.js`);
+    assert.calledWith(fs.copyFile, '../../templates/rollup.config.js', `${projectRoot}/rollup.config.js`);
   });
 
   test('that modern-js details are handled', async () => {
