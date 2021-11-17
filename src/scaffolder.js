@@ -3,7 +3,7 @@ import deepmerge from 'deepmerge';
 import {dialects, projectTypes} from '@form8ion/javascript-core';
 
 export async function scaffold({projectRoot, dialect, projectType}) {
-  await fs.copyFile('../../templates/rollup.config.js', `${projectRoot}/rollup.config.js`);
+  await fs.copyFile(require.resolve('../templates/rollup.config.js'), `${projectRoot}/rollup.config.js`);
 
   return deepmerge.all([
     {

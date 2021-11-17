@@ -1,1 +1,1 @@
-export {scaffold} from './build/rollup';
+export {scaffold} from './scaffolder';
