@@ -14,6 +14,10 @@ Given('the project-type is {string}', async function (projectType) {
   this.projectType = projectType;
 });
 
+Given('the project dialect is {string}', async function (dialect) {
+  this.dialect = dialect;
+});
+
 When('the project is scaffolded', async function () {
   // eslint-disable-next-line import/no-extraneous-dependencies,import/no-unresolved
   const {scaffold} = require('@form8ion/rollup');
@@ -33,5 +37,9 @@ When('the project is scaffolded', async function () {
 
   });
 
-  this.scaffoldResult = await scaffold({projectRoot: process.cwd(), projectType: this.projectType});
+  this.scaffoldResult = await scaffold({
+    projectRoot: process.cwd(),
+    projectType: this.projectType,
+    dialect: this.dialect
+  });
 });

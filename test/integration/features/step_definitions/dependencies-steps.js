@@ -19,3 +19,12 @@ Then('dependencies are installed for a {string} project-type', async function (p
     assert.include(devDependencies, 'rollup-plugin-executable');
   }
 });
+
+Then('dependencies are installed for the {string} dialect', async function (dialect) {
+  const {dialects} = require('@form8ion/javascript-core');
+  const {devDependencies} = this.scaffoldResult;
+
+  if (dialects.TYPESCRIPT === dialect) {
+    assert.include(devDependencies, '@rollup/plugin-typescript');
+  }
+});
