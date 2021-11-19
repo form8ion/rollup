@@ -29,5 +29,5 @@ When('the project is scaffolded', async function () {
 
   });
 
-  await scaffold({projectRoot: process.cwd()});
+  this.scaffoldResult = await scaffold({projectRoot: process.cwd()});
 });
