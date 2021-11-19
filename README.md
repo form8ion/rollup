@@ -15,6 +15,11 @@ form8ion plugin for managing rollup configuration in javascript projects
   * [Example](#example)
     * [Import](#import)
     * [Execute](#execute)
+  * [API](#api)
+    * [scaffold](#scaffold)
+      * [`projectRoot` __string__ (_required_)](#projectroot-string-required)
+      * [`projectType` __string__ (_required_)](#projecttype-string-required)
+      * [`dialect` __string__ (_required_)](#dialect-string-required)
 * [Contributing](#contributing)
   * [Dependencies](#dependencies)
   * [Verification](#verification)
@@ -50,6 +55,27 @@ import {scaffold} from '@form8ion/rollup';
   await scaffold({projectRoot: process.cwd(), dialect: dialects.BABEL, projectType: projectTypes.PACKAGE});
 })();
 ```
+
+### API
+
+#### scaffold
+
+Scaffolder for configuring bundling of packages with [Rollup](https://rollupjs.org/guide/en/)
+
+Takes a single options object as an argument, containing:
+
+##### `projectRoot` __string__ (_required_)
+
+path to the root of the project
+
+##### `projectType` __string__ (_required_)
+
+Chosen type of possible JavaScript [project type](https://github.com/form8ion/javascript-core#projecttypes)
+
+##### `dialect` __string__ (_required_)
+
+Chosen source JavaScript [dialect](https://github.com/form8ion/javascript-core#dialects)
+of the project
 
 ## Contributing
 
