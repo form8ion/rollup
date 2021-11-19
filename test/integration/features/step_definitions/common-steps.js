@@ -1,5 +1,5 @@
 import {resolve} from 'path';
-import {After, When} from '@cucumber/cucumber';
+import {After, Given, When} from '@cucumber/cucumber';
 import stubbedFs from 'mock-fs';
 import {promises as fs} from 'fs';
 
@@ -8,6 +8,10 @@ const packagePreviewDirectory = '../__package_previews__/rollup';
 
 After(function () {
   stubbedFs.restore();
+});
+
+Given('the project-type is {string}', async function (projectType) {
+  this.projectType = projectType;
 });
 
 When('the project is scaffolded', async function () {
@@ -29,5 +33,5 @@ When('the project is scaffolded', async function () {
 
   });
 
-  this.scaffoldResult = await scaffold({projectRoot: process.cwd()});
+  this.scaffoldResult = await scaffold({projectRoot: process.cwd(), projectType: this.projectType});
 });
