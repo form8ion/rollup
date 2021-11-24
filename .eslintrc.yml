@@ -3,9 +3,3 @@ extends:
   - '@form8ion'
   - '@form8ion/cucumber'
   - '@form8ion/mocha'
-
-overrides:
-  - files: example.js
-    rules:
-      import/no-extraneous-dependencies: off
-      no-console: off
