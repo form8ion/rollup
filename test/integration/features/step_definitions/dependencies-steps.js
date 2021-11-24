@@ -27,4 +27,8 @@ Then('dependencies are installed for the {string} dialect', async function (dial
   if (dialects.TYPESCRIPT === dialect) {
     assert.include(devDependencies, '@rollup/plugin-typescript');
   }
+
+  if (dialects.BABEL === dialect) {
+    assert.include(devDependencies, '@rollup/plugin-babel');
+  }
 });

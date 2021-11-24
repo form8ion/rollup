@@ -6,6 +6,12 @@ import any from '@travi/any';
 import scaffoldDialect from './dialect';
 
 suite('dialect', () => {
+  test('that babel details are handled', async () => {
+    const {devDependencies} = await scaffoldDialect({dialect: dialects.BABEL});
+
+    assert.deepEqual(devDependencies, ['@rollup/plugin-babel']);
+  });
+
   test('that typescript details are handled', async () => {
     const {devDependencies, vcsIgnore} = await scaffoldDialect({dialect: dialects.TYPESCRIPT});
 
