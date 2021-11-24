@@ -1,4 +1,3 @@
-/* eslint import/no-extraneous-dependencies: ['error', {'devDependencies': true}] */
 import autoExternal from 'rollup-plugin-auto-external';
 
 export default {
