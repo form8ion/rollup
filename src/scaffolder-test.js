@@ -1,8 +1,11 @@
 import {promises as fs} from 'fs';
 import {dialects, projectTypes} from '@form8ion/javascript-core';
+
 import {assert} from 'chai';
 import sinon from 'sinon';
 import any from '@travi/any';
+
+import * as dialectScaffolder from './dialect';
 import {scaffold} from './scaffolder';
 
 suite('rollup', () => {
@@ -13,16 +16,31 @@ suite('rollup', () => {
     sandbox = sinon.createSandbox();
 
     sandbox.stub(fs, 'copyFile');
+    sandbox.stub(dialectScaffolder, 'default');
+
+    dialectScaffolder.default.returns({});
   });
 
   teardown(() => sandbox.restore());
 
   test('that rollup is configured', async () => {
-    const {devDependencies, scripts} = await scaffold({projectRoot});
+    const dialect = any.word();
+    const dialectResults = any.simpleObject();
+    dialectScaffolder.default.withArgs({dialect}).returns(dialectResults);
 
-    assert.equal(scripts['build:js'], 'rollup --config');
-    assert.equal(scripts.watch, 'run-s \'build:js -- --watch\'');
-    assert.deepEqual(devDependencies, ['rollup', 'rollup-plugin-auto-external']);
+    const results = await scaffold({projectRoot, dialect});
+
+    assert.deepEqual(
+      results,
+      {
+        scripts: {
+          'build:js': 'rollup --config',
+          watch: "run-s 'build:js -- --watch'"
+        },
+        devDependencies: ['rollup', 'rollup-plugin-auto-external'],
+        ...dialectResults
+      }
+    );
     assert.calledWith(fs.copyFile, require.resolve('../templates/rollup.config.js'), `${projectRoot}/rollup.config.js`);
   });
 
@@ -38,12 +56,5 @@ suite('rollup', () => {
 
     assert.include(devDependencies, '@rollup/plugin-json');
     assert.include(devDependencies, 'rollup-plugin-executable');
-  });
-
-  test('that typescript details are handled', async () => {
-    const {devDependencies, vcsIgnore} = await scaffold({projectRoot, dialect: dialects.TYPESCRIPT});
-
-    assert.include(devDependencies, '@rollup/plugin-typescript');
-    assert.include(vcsIgnore.directories, '.rollup.cache/');
   });
 });

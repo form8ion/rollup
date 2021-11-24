@@ -1,6 +1,8 @@
 import {promises as fs} from 'fs';
 import deepmerge from 'deepmerge';
-import {dialects, projectTypes} from '@form8ion/javascript-core';
+import {projectTypes} from '@form8ion/javascript-core';
+
+import scaffoldDialect from './dialect';
 
 export async function scaffold({projectRoot, dialect, projectType}) {
   await fs.copyFile(require.resolve('../templates/rollup.config.js'), `${projectRoot}/rollup.config.js`);
@@ -18,11 +20,6 @@ export async function scaffold({projectRoot, dialect, projectType}) {
         devDependencies: ['@rollup/plugin-json', 'rollup-plugin-executable']
       }
     },
-    {
-      ...dialects.TYPESCRIPT === dialect && {
-        devDependencies: ['@rollup/plugin-typescript'],
-        vcsIgnore: {directories: ['.rollup.cache/']}
-      }
-    }
+    scaffoldDialect({dialect})
   ]);
 }
