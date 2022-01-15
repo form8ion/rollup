@@ -45,7 +45,7 @@ $ npm install @form8ion/rollup --save-prod
 #### Import
 
 ```javascript
-import {scaffold} from '@form8ion/rollup';
+import {dialects, projectTypes} from '@form8ion/javascript-core';
 ```
 
 #### Execute
