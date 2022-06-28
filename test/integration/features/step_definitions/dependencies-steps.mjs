@@ -1,3 +1,5 @@
+import {dialects, projectTypes} from '@form8ion/javascript-core';
+
 import {Then} from '@cucumber/cucumber';
 import {assert} from 'chai';
 
@@ -11,7 +13,6 @@ Then('dependencies are installed', async function () {
 });
 
 Then('dependencies are installed for a {string} project-type', async function (projectType) {
-  const {projectTypes} = require('@form8ion/javascript-core');
   const {devDependencies} = this.scaffoldResult;
 
   if (projectTypes.CLI === projectType) {
@@ -21,7 +22,6 @@ Then('dependencies are installed for a {string} project-type', async function (p
 });
 
 Then('dependencies are installed for the {string} dialect', async function (dialect) {
-  const {dialects} = require('@form8ion/javascript-core');
   const {devDependencies} = this.scaffoldResult;
 
   if (dialects.TYPESCRIPT === dialect) {
