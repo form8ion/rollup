@@ -31,6 +31,7 @@ form8ion plugin for managing rollup configuration in javascript projects
 [![MIT license][license-badge]][license-link]
 [![npm][npm-badge]][npm-link]
 [![Try @form8ion/rollup on RunKit][runkit-badge]][runkit-link]
+![node][node-badge]
 
 <!--consumer-badges end -->
 
@@ -137,3 +138,5 @@ $ npm test
 [runkit-link]: https://npm.runkit.com/@form8ion/rollup
 
 [runkit-badge]: https://badge.runkitcdn.com/@form8ion/rollup.svg
+
+[node-badge]: https://img.shields.io/node/v/@form8ion/rollup?logo=node.js

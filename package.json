@@ -3,6 +3,9 @@
   "description": "form8ion plugin for managing rollup configuration in javascript projects",
   "license": "MIT",
   "version": "0.0.0-semantically-released",
+  "engines": {
+    "node": "^14.15 || >=16"
+  },
   "files": [
     "example.js",
     "lib/",
@@ -45,7 +48,8 @@
     "prepack": "run-s build",
     "test:unit": "cross-env NODE_ENV=test c8 run-s test:unit:base",
     "test:unit:base": "DEBUG=any mocha 'src/**/*-test.js'",
-    "lint:peer": "npm ls >/dev/null"
+    "lint:peer": "npm ls >/dev/null",
+    "lint:engines": "ls-engines"
   },
   "devDependencies": {
     "@babel/register": "7.17.7",
@@ -66,6 +70,7 @@
     "gherkin-lint": "4.2.2",
     "husky": "8.0.1",
     "lockfile-lint": "4.7.5",
+    "ls-engines": "0.7.0",
     "mocha": "10.0.0",
     "mock-fs": "5.1.2",
     "npm-run-all": "4.1.5",
