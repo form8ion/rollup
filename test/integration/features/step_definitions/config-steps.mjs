@@ -2,7 +2,7 @@ import {assert} from 'chai';
 import {promises as fs} from 'fs';
 import {Then} from '@cucumber/cucumber';
 
-import {autoExternal} from './dependencies-steps';
+import {autoExternal} from './dependencies-steps.mjs';
 
 Then('the config is generated', async function () {
   assert.equal(
@@ -13,8 +13,8 @@ export default {
   input: 'src/index.js',
   plugins: [autoExternal()],
   output: [
-    {file: 'lib/index.cjs.js', format: 'cjs', sourcemap: true},
-    {file: 'lib/index.es.js', format: 'es', sourcemap: true}
+    {file: 'lib/index.js', format: 'cjs', sourcemap: true},
+    {file: 'lib/index.mjs', format: 'es', sourcemap: true}
   ]
 };
 `

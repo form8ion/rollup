@@ -3,6 +3,9 @@
   "description": "form8ion plugin for managing rollup configuration in javascript projects",
   "license": "MIT",
   "version": "0.0.0-semantically-released",
+  "engines": {
+    "node": "^14.18 || >=16"
+  },
   "files": [
     "example.js",
     "lib/",
@@ -12,8 +15,12 @@
     "access": "public"
   },
   "runkitExampleFilename": "./example.js",
-  "main": "lib/index.cjs.js",
-  "module": "lib/index.es.js",
+  "main": "./lib/index.js",
+  "module": "./lib/index.mjs",
+  "exports": {
+    "require": "./lib/index.js",
+    "import": "./lib/index.mjs"
+  },
   "sideEffects": false,
   "repository": "form8ion/rollup",
   "bugs": "https://github.com/form8ion/rollup/issues",
@@ -29,10 +36,10 @@
     "pregenerate:md": "run-s build",
     "lint:sensitive": "ban",
     "prepare": "husky install",
-    "pretest:integration": "preview",
+    "pretest:integration": "run-s build",
     "lint:gherkin": "gherkin-lint",
     "test:integration": "run-s 'test:integration:base -- --profile noWip'",
-    "test:integration:base": "NODE_OPTIONS=--enable-source-maps DEBUG=any cucumber-js test/integration --profile base",
+    "test:integration:base": "NODE_OPTIONS=--enable-source-maps DEBUG=any cucumber-js test/integration",
     "test:integration:debug": "DEBUG=test run-s test:integration",
     "test:integration:wip": "run-s 'test:integration:base -- --profile wip'",
     "test:integration:wip:debug": "DEBUG=test run-s 'test:integration:wip'",
@@ -45,7 +52,8 @@
     "prepack": "run-s build",
     "test:unit": "cross-env NODE_ENV=test c8 run-s test:unit:base",
     "test:unit:base": "DEBUG=any mocha 'src/**/*-test.js'",
-    "lint:peer": "npm ls >/dev/null"
+    "lint:peer": "npm ls >/dev/null",
+    "lint:engines": "ls-engines"
   },
   "devDependencies": {
     "@babel/register": "7.18.6",
@@ -66,10 +74,10 @@
     "gherkin-lint": "4.2.2",
     "husky": "8.0.1",
     "lockfile-lint": "4.7.6",
+    "ls-engines": "0.7.0",
     "mocha": "10.0.0",
     "mock-fs": "5.1.2",
     "npm-run-all": "4.1.5",
-    "package-preview": "4.0.0",
     "remark-cli": "11.0.0",
     "remark-toc": "8.0.1",
     "remark-usage": "10.0.1",
@@ -80,6 +88,7 @@
   },
   "dependencies": {
     "@form8ion/javascript-core": "^6.0.0",
-    "deepmerge": "^4.2.2"
+    "deepmerge": "^4.2.2",
+    "filedirname": "^2.7.0"
   }
 }

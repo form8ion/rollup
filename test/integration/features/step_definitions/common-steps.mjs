@@ -1,9 +1,13 @@
 import {resolve} from 'path';
+
+import filedirname from 'filedirname';
 import {After, Given, When} from '@cucumber/cucumber';
 import stubbedFs from 'mock-fs';
-import {promises as fs} from 'fs';
 
-const stubbedNodeModules = stubbedFs.load(resolve(__dirname, '..', '..', '..', '..', 'node_modules'));
+// eslint-disable-next-line import/no-extraneous-dependencies,import/no-unresolved
+import {scaffold} from '@form8ion/rollup';
+
+const [, __dirname] = filedirname();
 const packagePreviewDirectory = '../__package_previews__/rollup';
 
 After(function () {
@@ -19,22 +23,9 @@ Given('the project dialect is {string}', async function (dialect) {
 });
 
 When('the project is scaffolded', async function () {
-  // eslint-disable-next-line import/no-extraneous-dependencies,import/no-unresolved
-  const {scaffold} = require('@form8ion/rollup');
-
   stubbedFs({
-    node_modules: stubbedNodeModules,
-    [packagePreviewDirectory]: {
-      '@form8ion': {
-        rollup: {
-          templates: {
-            'rollup.config.js': await fs.readFile(resolve(__dirname, '../../../../', 'templates/rollup.config.js'))
-          }
-        }
-      },
-      node_modules: stubbedNodeModules
-    }
-
+    node_modules: stubbedFs.load(resolve(__dirname, '..', '..', '..', '..', 'node_modules')),
+    templates: stubbedFs.load(resolve(__dirname, '..', '..', '..', '..', 'templates'))
   });
 
   this.scaffoldResult = await scaffold({
