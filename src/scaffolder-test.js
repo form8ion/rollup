@@ -41,7 +41,11 @@ suite('rollup', () => {
         ...dialectResults
       }
     );
-    assert.calledWith(fs.copyFile, require.resolve('../templates/rollup.config.js'), `${projectRoot}/rollup.config.js`);
+    assert.calledWith(
+      fs.copyFile,
+      require.resolve('../templates/rollup.config.js'),
+      `${projectRoot}/rollup.config.mjs`
+    );
   });
 
   test('that modern-js details are handled', async () => {

@@ -10,7 +10,7 @@ import scaffoldDialect from './dialect';
 const [, __dirname] = filedirname();
 
 export async function scaffold({projectRoot, dialect, projectType}) {
-  await fs.copyFile(resolve(__dirname, '..', 'templates', 'rollup.config.js'), `${projectRoot}/rollup.config.js`);
+  await fs.copyFile(resolve(__dirname, '..', 'templates', 'rollup.config.js'), `${projectRoot}/rollup.config.mjs`);
 
   return deepmerge.all([
     {

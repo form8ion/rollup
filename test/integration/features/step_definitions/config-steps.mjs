@@ -6,7 +6,7 @@ import {autoExternal} from './dependencies-steps.mjs';
 
 Then('the config is generated', async function () {
   assert.equal(
-    await fs.readFile(`${process.cwd()}/rollup.config.js`, 'utf-8'),
+    await fs.readFile(`${process.cwd()}/rollup.config.mjs`, 'utf-8'),
     `import autoExternal from '${autoExternal}';
 
 export default {
