@@ -3,7 +3,7 @@ import {dialects} from '@form8ion/javascript-core';
 import {assert} from 'chai';
 import any from '@travi/any';
 
-import scaffoldDialect from './dialect';
+import scaffoldDialect from './dialect.js';
 
 suite('dialect', () => {
   test('that babel details are handled', async () => {

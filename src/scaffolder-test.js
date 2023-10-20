@@ -5,8 +5,8 @@ import {assert} from 'chai';
 import sinon from 'sinon';
 import any from '@travi/any';
 
-import * as dialectScaffolder from './dialect';
-import {scaffold} from './scaffolder';
+import * as dialectScaffolder from './dialect.js';
+import {scaffold} from './scaffolder.js';
 
 suite('rollup', () => {
   let sandbox;
