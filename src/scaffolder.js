@@ -5,7 +5,7 @@ import filedirname from 'filedirname';
 import deepmerge from 'deepmerge';
 import {projectTypes} from '@form8ion/javascript-core';
 
-import scaffoldDialect from './dialect';
+import scaffoldDialect from './dialect.js';
 
 const [, __dirname] = filedirname();
 
