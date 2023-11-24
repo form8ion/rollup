@@ -59,7 +59,7 @@
   "dependencies": {
     "@form8ion/javascript-core": "^9.0.0",
     "deepmerge": "^4.2.2",
-    "filedirname": "^2.7.0"
+    "filedirname": "^3.0.0"
   },
   "devDependencies": {
     "@babel/register": "7.22.15",
