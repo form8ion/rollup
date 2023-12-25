@@ -5,6 +5,6 @@ export default {
   plugins: [autoExternal()],
   output: [
     {file: 'lib/index.js', format: 'cjs', sourcemap: true},
-    {file: 'lib/index.mjs', format: 'es', sourcemap: true}
+    {file: 'lib/index.mjs', format: 'esm', sourcemap: true}
   ]
 };
