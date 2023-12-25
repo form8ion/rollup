@@ -61,4 +61,14 @@ suite('rollup', () => {
     assert.include(devDependencies, '@rollup/plugin-json');
     assert.include(devDependencies, 'rollup-plugin-executable');
   });
+
+  test('that the config has a `.js` extension when the dialect is `ESM`', async () => {
+    await scaffold({projectRoot, dialect: dialects.ESM});
+
+    assert.calledWith(
+      fs.copyFile,
+      require.resolve('../templates/rollup.config.js'),
+      `${projectRoot}/rollup.config.js`
+    );
+  });
 });
