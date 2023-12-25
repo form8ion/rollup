@@ -1,4 +1,4 @@
-import {promises as fs} from 'fs';
+import {promises as fs} from 'node:fs';
 import {dialects, projectTypes} from '@form8ion/javascript-core';
 
 import {assert} from 'chai';
