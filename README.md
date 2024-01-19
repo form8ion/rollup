@@ -5,6 +5,7 @@ form8ion plugin for managing rollup configuration in javascript projects
 <!--status-badges start -->
 
 [![Node CI Workflow Status][github-actions-ci-badge]][github-actions-ci-link]
+[![Codecov][coverage-badge]][coverage-link]
 
 <!--status-badges end -->
 
@@ -140,3 +141,7 @@ $ npm test
 [runkit-badge]: https://badge.runkitcdn.com/@form8ion/rollup.svg
 
 [node-badge]: https://img.shields.io/node/v/@form8ion/rollup?logo=node.js
+
+[coverage-link]: https://codecov.io/github/form8ion/rollup
+
+[coverage-badge]: https://img.shields.io/codecov/c/github/form8ion/rollup?logo=codecov
