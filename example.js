@@ -1,12 +1,11 @@
 // #### Import
-// remark-usage-ignore-next 2
-import {resolve} from 'path';
+// remark-usage-ignore-next
 import stubbedFs from 'mock-fs';
 import {dialects, projectTypes} from '@form8ion/javascript-core';
 import {scaffold} from './lib/index.js';
 
 // remark-usage-ignore-next
-stubbedFs({templates: stubbedFs.load(resolve(...[__dirname, 'templates']))});
+stubbedFs({templates: stubbedFs.load('templates')});
 
 // #### Execute
 

@@ -8,7 +8,6 @@ import stubbedFs from 'mock-fs';
 import {scaffold} from '@form8ion/rollup';
 
 const [, __dirname] = filedirname();
-const packagePreviewDirectory = '../__package_previews__/rollup';
 
 After(function () {
   stubbedFs.restore();
