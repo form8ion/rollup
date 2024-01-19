@@ -26,7 +26,7 @@ export async function scaffold({projectRoot, dialect, projectType}) {
       devDependencies: ['rollup', 'rollup-plugin-auto-external'],
       scripts: {
         'build:js': 'rollup --config',
-        watch: 'run-s \'build:js -- --watch\''
+        watch: "run-s 'build:js -- --watch'"
       }
     },
     {
