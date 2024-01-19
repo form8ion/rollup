@@ -135,7 +135,7 @@ $ npm test
 
 [npm-link]: https://www.npmjs.com/package/@form8ion/rollup
 
-[npm-badge]: https://img.shields.io/npm/v/@form8ion/rollup.svg
+[npm-badge]: https://img.shields.io/npm/v/@form8ion/rollup?logo=npm
 
 [runkit-link]: https://npm.runkit.com/@form8ion/rollup
 
