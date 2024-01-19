@@ -2,7 +2,7 @@ import {assert} from 'chai';
 import {promises as fs} from 'fs';
 import {Then} from '@cucumber/cucumber';
 
-import {autoExternal} from './dependencies-steps.mjs';
+import {autoExternal} from './dependencies-steps.js';
 
 Then('the config is generated with a(n) {string} extension', async function (extension) {
   assert.equal(
