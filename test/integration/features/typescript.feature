@@ -5,3 +5,4 @@ Feature: Scaffold for a TypeScript dialect project
     When the project is scaffolded
     Then dependencies are installed for the "typescript" dialect
     And the proper ignores are defined for the "typescript" dialect
+    And the config is generated with an "mjs" extension

@@ -4,3 +4,4 @@ Feature: Scaffold for a CLI project-type
     Given the project-type is "CLI"
     When the project is scaffolded
     Then dependencies are installed for a "CLI" project-type
+    And the config is generated with an "mjs" extension
