@@ -1,6 +1,7 @@
 import {promises as fs} from 'node:fs';
 import {resolve} from 'node:path';
 
+import mustache from 'mustache';
 import filedirname from 'filedirname';
 import deepmerge from 'deepmerge';
 import {dialects, projectTypes} from '@form8ion/javascript-core';
@@ -16,9 +17,12 @@ function determineExtensionFor({dialect}) {
 }
 
 export async function scaffold({projectRoot, dialect, projectType}) {
-  await fs.copyFile(
-    resolve(__dirname, '..', 'templates', 'rollup.config.js'),
-    `${projectRoot}/rollup.config.${(determineExtensionFor({dialect}))}`
+  fs.writeFile(
+    `${projectRoot}/rollup.config.${(determineExtensionFor({dialect}))}`,
+    mustache.render(
+      await fs.readFile(resolve(__dirname, '..', 'templates', 'rollup.config.mustache'), 'utf-8'),
+      {dualMode: dialect !== dialects.ESM}
+    )
   );
 
   return deepmerge.all([

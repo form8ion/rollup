@@ -4,3 +4,4 @@ Feature: Scaffold for a ESM dialect project
     Given the project dialect is "esm"
     When the project is scaffolded
     Then the config is generated with a "js" extension
+    And an ESM bundle is generated

@@ -6,3 +6,4 @@ Feature: Scaffold for a TypeScript dialect project
     Then dependencies are installed for the "typescript" dialect
     And the proper ignores are defined for the "typescript" dialect
     And the config is generated with an "mjs" extension
+    And dual-mode bundles are generated

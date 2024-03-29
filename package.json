@@ -57,7 +57,8 @@
   "dependencies": {
     "@form8ion/javascript-core": "^11.0.0",
     "deepmerge": "^4.2.2",
-    "filedirname": "^3.0.0"
+    "filedirname": "^3.0.0",
+    "mustache": "^4.2.0"
   },
   "devDependencies": {
     "@cucumber/cucumber": "10.3.2",
