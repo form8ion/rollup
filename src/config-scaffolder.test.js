@@ -26,7 +26,7 @@ describe('config scaffolder', () => {
     const dialect = any.word();
     when(mustache.render).calledWith(template, {dualMode: true}).mockReturnValue(renderedTemplate);
 
-    await scaffoldConfig({projectRoot, dialect});
+    expect(await scaffoldConfig({projectRoot, dialect})).toEqual({});
 
     expect(fs.writeFile).toHaveBeenCalledWith(`${projectRoot}/rollup.config.mjs`, renderedTemplate);
   });

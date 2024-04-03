@@ -1,28 +1,24 @@
-import {promises as fs} from 'node:fs';
+import deepmerge from 'deepmerge';
 import {dialects, projectTypes} from '@form8ion/javascript-core';
-import mustache from 'mustache';
 
 import any from '@travi/any';
-import {vi, describe, it, expect, afterEach, beforeEach} from 'vitest';
+import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest';
 import {when} from 'jest-when';
 
 import scaffoldDialect from './dialect.js';
+import scaffoldConfig from './config-scaffolder.js';
 import {scaffold} from './scaffolder.js';
 
-vi.mock('node:fs');
-vi.mock('mustache');
+vi.mock('deepmerge');
 vi.mock('./dialect.js');
+vi.mock('./config-scaffolder.js');
 
 describe('rollup scaffolder', () => {
   const projectRoot = any.string();
-  const template = any.string();
-  const renderedTemplate = any.string();
+  const mergedResults = any.simpleObject();
 
   beforeEach(() => {
     scaffoldDialect.mockReturnValue({});
-    when(fs.readFile)
-      .calledWith(require.resolve('../templates/rollup.config.mustache'), 'utf-8')
-      .mockResolvedValue(template);
   });
 
   afterEach(() => {
@@ -33,39 +29,44 @@ describe('rollup scaffolder', () => {
     const dialect = any.word();
     const dialectResults = any.simpleObject();
     when(scaffoldDialect).calledWith({dialect}).mockReturnValue(dialectResults);
-    when(mustache.render).calledWith(template, {dualMode: true}).mockReturnValue(renderedTemplate);
+    when(deepmerge.all)
+      .calledWith([
+        {
+          devDependencies: ['rollup', 'rollup-plugin-auto-external'],
+          scripts: {
+            'build:js': 'rollup --config',
+            watch: 'run-s \'build:js -- --watch\''
+          }
+        },
+        {},
+        dialectResults
+      ])
+      .mockReturnValue(mergedResults);
 
     const results = await scaffold({projectRoot, dialect});
 
-    expect(results).toEqual({
-      scripts: {
-        'build:js': 'rollup --config',
-        watch: "run-s 'build:js -- --watch'"
-      },
-      devDependencies: ['rollup', 'rollup-plugin-auto-external'],
-      ...dialectResults
-    });
-    expect(fs.writeFile).toHaveBeenCalledWith(`${projectRoot}/rollup.config.mjs`, renderedTemplate);
-  });
-
-  it('should handle modern-js details', async () => {
-    const {devDependencies, vcsIgnore} = await scaffold({projectRoot, dialect: dialects.BABEL});
-
-    expect(devDependencies).not.toContain('@rollup/plugin-typescript');
-    expect(vcsIgnore).toBe(undefined);
+    expect(results).toEqual(mergedResults);
+    expect(scaffoldConfig).toHaveBeenCalledWith({projectRoot, dialect});
   });
 
   it('should handle details for a CLI project', async () => {
-    const {devDependencies} = await scaffold({projectRoot, dialect: dialects.BABEL, projectType: projectTypes.CLI});
+    when(deepmerge.all)
+      .calledWith([
+        {
+          devDependencies: ['rollup', 'rollup-plugin-auto-external'],
+          scripts: {
+            'build:js': 'rollup --config',
+            watch: 'run-s \'build:js -- --watch\''
+          }
+        },
+        {
+          devDependencies: ['@rollup/plugin-json', 'rollup-plugin-executable']
+        },
+        {}
+      ])
+      .mockReturnValue(mergedResults);
 
-    expect(devDependencies).toContain('@rollup/plugin-json');
-    expect(devDependencies).toContain('rollup-plugin-executable');
-  });
-
-  it('should use a `.js` extension for the config when the dialect is ESM', async () => {
-    when(mustache.render).calledWith(template, {dualMode: false}).mockReturnValue(renderedTemplate);
-    await scaffold({projectRoot, dialect: dialects.ESM});
-
-    expect(fs.writeFile).toHaveBeenCalledWith(`${projectRoot}/rollup.config.js`, renderedTemplate);
+    expect(await scaffold({projectRoot, dialect: dialects.BABEL, projectType: projectTypes.CLI}))
+      .toEqual(mergedResults);
   });
 });

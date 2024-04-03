@@ -20,4 +20,6 @@ export default async function ({projectRoot, dialect}) {
       {dualMode: dialect !== dialects.ESM}
     )
   );
+
+  return {};
 }
