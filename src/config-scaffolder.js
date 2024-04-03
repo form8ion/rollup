@@ -17,7 +17,10 @@ export default async function ({projectRoot, dialect, projectType}) {
     `${projectRoot}/rollup.config.${(determineExtensionFor({dialect}))}`,
     mustache.render(
       await fs.readFile(resolve(__dirname, '..', 'templates', 'rollup.config.mustache'), 'utf-8'),
-      {dualMode: dialect !== dialects.ESM}
+      {
+        dualMode: dialect !== dialects.ESM,
+        cli: projectTypes.CLI === projectType
+      }
     )
   );
 

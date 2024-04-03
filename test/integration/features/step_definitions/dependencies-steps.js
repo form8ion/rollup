@@ -4,6 +4,8 @@ import {Then} from '@cucumber/cucumber';
 import {assert} from 'chai';
 
 export const autoExternal = 'rollup-plugin-auto-external';
+export const pluginJson = '@rollup/plugin-json';
+export const pluginExecutable = 'rollup-plugin-executable';
 
 Then('dependencies are installed', async function () {
   const {devDependencies} = this.scaffoldResult;
@@ -16,8 +18,8 @@ Then('dependencies are installed for a {string} project-type', async function (p
   const {devDependencies} = this.scaffoldResult;
 
   if (projectTypes.CLI === projectType) {
-    assert.include(devDependencies, '@rollup/plugin-json');
-    assert.include(devDependencies, 'rollup-plugin-executable');
+    assert.include(devDependencies, pluginJson);
+    assert.include(devDependencies, pluginExecutable);
   }
 });
 

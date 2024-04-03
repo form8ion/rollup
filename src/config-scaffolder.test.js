@@ -24,7 +24,7 @@ describe('config scaffolder', () => {
 
   it('should generate the file and determine additional plugins', async () => {
     const dialect = any.word();
-    when(mustache.render).calledWith(template, {dualMode: true}).mockReturnValue(renderedTemplate);
+    when(mustache.render).calledWith(template, {dualMode: true, cli: false}).mockReturnValue(renderedTemplate);
 
     expect(await scaffoldConfig({projectRoot, dialect})).toEqual({});
 
@@ -32,7 +32,7 @@ describe('config scaffolder', () => {
   });
 
   it('should use a `.js` extension for the config when the dialect is ESM', async () => {
-    when(mustache.render).calledWith(template, {dualMode: false}).mockReturnValue(renderedTemplate);
+    when(mustache.render).calledWith(template, {dualMode: false, cli: false}).mockReturnValue(renderedTemplate);
 
     await scaffoldConfig({projectRoot, dialect: dialects.ESM});
 
@@ -41,9 +41,11 @@ describe('config scaffolder', () => {
 
   it('should adjust for CLI projects', async () => {
     const dialect = any.word();
+    when(mustache.render).calledWith(template, {dualMode: true, cli: true}).mockReturnValue(renderedTemplate);
 
     expect(await scaffoldConfig({projectRoot, dialect, projectType: projectTypes.CLI})).toEqual({
       devDependencies: ['@rollup/plugin-json', 'rollup-plugin-executable']
     });
+    expect(fs.writeFile).toHaveBeenCalledWith(`${projectRoot}/rollup.config.mjs`, renderedTemplate);
   });
 });
