@@ -1,29 +1,11 @@
-import {promises as fs} from 'node:fs';
-import {resolve} from 'node:path';
-
-import mustache from 'mustache';
-import filedirname from 'filedirname';
 import deepmerge from 'deepmerge';
-import {dialects, projectTypes} from '@form8ion/javascript-core';
+import {projectTypes} from '@form8ion/javascript-core';
 
+import scaffoldConfig from './config-scaffolder.js';
 import scaffoldDialect from './dialect.js';
 
-const [, __dirname] = filedirname();
-
-function determineExtensionFor({dialect}) {
-  if (dialects.ESM === dialect) return 'js';
-
-  return 'mjs';
-}
-
 export async function scaffold({projectRoot, dialect, projectType}) {
-  fs.writeFile(
-    `${projectRoot}/rollup.config.${(determineExtensionFor({dialect}))}`,
-    mustache.render(
-      await fs.readFile(resolve(__dirname, '..', 'templates', 'rollup.config.mustache'), 'utf-8'),
-      {dualMode: dialect !== dialects.ESM}
-    )
-  );
+  await scaffoldConfig({projectRoot, dialect});
 
   return deepmerge.all([
     {
