@@ -1,5 +1,4 @@
 import deepmerge from 'deepmerge';
-import {dialects, projectTypes} from '@form8ion/javascript-core';
 
 import any from '@travi/any';
 import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest';
@@ -27,8 +26,11 @@ describe('rollup scaffolder', () => {
 
   it('should configure rollup', async () => {
     const dialect = any.word();
+    const projectType = any.word();
     const dialectResults = any.simpleObject();
+    const configResults = any.simpleObject();
     when(scaffoldDialect).calledWith({dialect}).mockReturnValue(dialectResults);
+    when(scaffoldConfig).calledWith({projectRoot, dialect, projectType}).mockResolvedValue(configResults);
     when(deepmerge.all)
       .calledWith([
         {
@@ -38,35 +40,13 @@ describe('rollup scaffolder', () => {
             watch: 'run-s \'build:js -- --watch\''
           }
         },
-        {},
+        configResults,
         dialectResults
       ])
       .mockReturnValue(mergedResults);
 
-    const results = await scaffold({projectRoot, dialect});
+    const results = await scaffold({projectRoot, dialect, projectType});
 
     expect(results).toEqual(mergedResults);
-    expect(scaffoldConfig).toHaveBeenCalledWith({projectRoot, dialect});
-  });
-
-  it('should handle details for a CLI project', async () => {
-    when(deepmerge.all)
-      .calledWith([
-        {
-          devDependencies: ['rollup', 'rollup-plugin-auto-external'],
-          scripts: {
-            'build:js': 'rollup --config',
-            watch: 'run-s \'build:js -- --watch\''
-          }
-        },
-        {
-          devDependencies: ['@rollup/plugin-json', 'rollup-plugin-executable']
-        },
-        {}
-      ])
-      .mockReturnValue(mergedResults);
-
-    expect(await scaffold({projectRoot, dialect: dialects.BABEL, projectType: projectTypes.CLI}))
-      .toEqual(mergedResults);
   });
 });

@@ -2,7 +2,7 @@ import {promises as fs} from 'node:fs';
 import {resolve} from 'node:path';
 import mustache from 'mustache';
 import filedirname from 'filedirname';
-import {dialects} from '@form8ion/javascript-core';
+import {dialects, projectTypes} from '@form8ion/javascript-core';
 
 const [, __dirname] = filedirname();
 
@@ -12,7 +12,7 @@ function determineExtensionFor({dialect}) {
   return 'mjs';
 }
 
-export default async function ({projectRoot, dialect}) {
+export default async function ({projectRoot, dialect, projectType}) {
   await fs.writeFile(
     `${projectRoot}/rollup.config.${(determineExtensionFor({dialect}))}`,
     mustache.render(
@@ -21,5 +21,9 @@ export default async function ({projectRoot, dialect}) {
     )
   );
 
-  return {};
+  return {
+    ...projectTypes.CLI === projectType && {
+      devDependencies: ['@rollup/plugin-json', 'rollup-plugin-executable']
+    }
+  };
 }

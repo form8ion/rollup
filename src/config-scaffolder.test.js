@@ -1,6 +1,6 @@
 import {promises as fs} from 'node:fs';
 import mustache from 'mustache';
-import {dialects} from '@form8ion/javascript-core';
+import {dialects, projectTypes} from '@form8ion/javascript-core';
 
 import any from '@travi/any';
 import {beforeEach, describe, expect, it, vi} from 'vitest';
@@ -37,5 +37,13 @@ describe('config scaffolder', () => {
     await scaffoldConfig({projectRoot, dialect: dialects.ESM});
 
     expect(fs.writeFile).toHaveBeenCalledWith(`${projectRoot}/rollup.config.js`, renderedTemplate);
+  });
+
+  it('should adjust for CLI projects', async () => {
+    const dialect = any.word();
+
+    expect(await scaffoldConfig({projectRoot, dialect, projectType: projectTypes.CLI})).toEqual({
+      devDependencies: ['@rollup/plugin-json', 'rollup-plugin-executable']
+    });
   });
 });
