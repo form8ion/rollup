@@ -10,8 +10,9 @@ export default {
     executable(){{/cli}}
   ],
   output: [{{^cli}}{{#dualMode}}
-    {file: 'lib/index.js', format: 'cjs', sourcemap: true},{{/dualMode}}
-    {file: 'lib/index.mjs', format: 'esm', sourcemap: true}{{/cli}}{{#cli}}
+    {file: 'lib/index.js', format: 'cjs', sourcemap: true},
+    {file: 'lib/index.mjs', format: 'esm', sourcemap: true}{{/dualMode}}{{^dualMode}}
+    {file: 'lib/index.js', format: 'esm', sourcemap: true}{{/dualMode}}{{/cli}}{{#cli}}
     {file: 'bin/travi.js', format: 'esm', sourcemap: true, banner: '#!/usr/bin/env node'}{{/cli}}
   ]
 };

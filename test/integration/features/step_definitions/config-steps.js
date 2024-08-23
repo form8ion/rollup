@@ -38,7 +38,7 @@ export default {
     autoExternal()
   ],
   output: [
-    {file: 'lib/index.mjs', format: 'esm', sourcemap: true}
+    {file: 'lib/index.js', format: 'esm', sourcemap: true}
   ]
 };
 `
