@@ -6,7 +6,7 @@ import scaffoldDialect from './dialect.js';
 export async function scaffold({projectRoot, dialect, projectType}) {
   return deepmerge.all([
     {
-      devDependencies: ['rollup', 'rollup-plugin-auto-external'],
+      dependencies: {javascript: {development: ['rollup', 'rollup-plugin-auto-external']}},
       scripts: {
         'build:js': 'rollup --config',
         watch: "run-s 'build:js -- --watch'"

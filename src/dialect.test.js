@@ -7,15 +7,15 @@ import scaffoldDialect from './dialect.js';
 
 describe('dialect scaffolder', () => {
   it('should handle babel details', async () => {
-    const {devDependencies} = await scaffoldDialect({dialect: dialects.BABEL});
+    const {dependencies} = await scaffoldDialect({dialect: dialects.BABEL});
 
-    expect(devDependencies).toEqual(['@rollup/plugin-babel']);
+    expect(dependencies.javascript.development).toEqual(['@rollup/plugin-babel']);
   });
 
   it('should handle typescript details', async () => {
-    const {devDependencies, vcsIgnore} = await scaffoldDialect({dialect: dialects.TYPESCRIPT});
+    const {dependencies, vcsIgnore} = await scaffoldDialect({dialect: dialects.TYPESCRIPT});
 
-    expect(devDependencies).toEqual(['@rollup/plugin-typescript']);
+    expect(dependencies.javascript.development).toEqual(['@rollup/plugin-typescript']);
     expect(vcsIgnore.directories).toEqual(['.rollup.cache/']);
   });
 
