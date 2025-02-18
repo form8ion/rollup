@@ -26,7 +26,7 @@ export default async function ({projectRoot, dialect, projectType}) {
 
   return {
     ...projectTypes.CLI === projectType && {
-      devDependencies: ['@rollup/plugin-json', 'rollup-plugin-executable']
+      dependencies: {javascript: {development: ['@rollup/plugin-json', 'rollup-plugin-executable']}}
     }
   };
 }

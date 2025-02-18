@@ -34,7 +34,7 @@ describe('rollup scaffolder', () => {
     when(deepmerge.all)
       .calledWith([
         {
-          devDependencies: ['rollup', 'rollup-plugin-auto-external'],
+          dependencies: {javascript: {development: ['rollup', 'rollup-plugin-auto-external']}},
           scripts: {
             'build:js': 'rollup --config',
             watch: 'run-s \'build:js -- --watch\''

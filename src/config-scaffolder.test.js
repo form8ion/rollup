@@ -44,7 +44,7 @@ describe('config scaffolder', () => {
     when(mustache.render).calledWith(template, {dualMode: true, cli: true}).mockReturnValue(renderedTemplate);
 
     expect(await scaffoldConfig({projectRoot, dialect, projectType: projectTypes.CLI})).toEqual({
-      devDependencies: ['@rollup/plugin-json', 'rollup-plugin-executable']
+      dependencies: {javascript: {development: ['@rollup/plugin-json', 'rollup-plugin-executable']}}
     });
     expect(fs.writeFile).toHaveBeenCalledWith(`${projectRoot}/rollup.config.mjs`, renderedTemplate);
   });
