@@ -2,7 +2,7 @@ import deepmerge from 'deepmerge';
 
 import any from '@travi/any';
 import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest';
-import {when} from 'jest-when';
+import {when} from 'vitest-when';
 
 import scaffoldDialect from './dialect.js';
 import scaffoldConfig from './config-scaffolder.js';
@@ -29,8 +29,8 @@ describe('rollup scaffolder', () => {
     const projectType = any.word();
     const dialectResults = any.simpleObject();
     const configResults = any.simpleObject();
-    when(scaffoldDialect).calledWith({dialect}).mockReturnValue(dialectResults);
-    when(scaffoldConfig).calledWith({projectRoot, dialect, projectType}).mockResolvedValue(configResults);
+    when(scaffoldDialect).calledWith({dialect}).thenReturn(dialectResults);
+    when(scaffoldConfig).calledWith({projectRoot, dialect, projectType}).thenResolve(configResults);
     when(deepmerge.all)
       .calledWith([
         {
@@ -43,7 +43,7 @@ describe('rollup scaffolder', () => {
         configResults,
         dialectResults
       ])
-      .mockReturnValue(mergedResults);
+      .thenReturn(mergedResults);
 
     const results = await scaffold({projectRoot, dialect, projectType});
 

@@ -4,7 +4,7 @@ import {dialects, projectTypes} from '@form8ion/javascript-core';
 
 import any from '@travi/any';
 import {beforeEach, describe, expect, it, vi} from 'vitest';
-import {when} from 'jest-when';
+import {when} from 'vitest-when';
 
 import scaffoldConfig from './config-scaffolder.js';
 
@@ -19,12 +19,12 @@ describe('config scaffolder', () => {
   beforeEach(() => {
     when(fs.readFile)
       .calledWith(require.resolve('../templates/rollup.config.mustache'), 'utf-8')
-      .mockResolvedValue(template);
+      .thenResolve(template);
   });
 
   it('should generate the file and determine additional plugins', async () => {
     const dialect = any.word();
-    when(mustache.render).calledWith(template, {dualMode: true, cli: false}).mockReturnValue(renderedTemplate);
+    when(mustache.render).calledWith(template, {dualMode: true, cli: false}).thenReturn(renderedTemplate);
 
     expect(await scaffoldConfig({projectRoot, dialect})).toEqual({});
 
@@ -32,7 +32,7 @@ describe('config scaffolder', () => {
   });
 
   it('should use a `.js` extension for the config when the dialect is ESM', async () => {
-    when(mustache.render).calledWith(template, {dualMode: false, cli: false}).mockReturnValue(renderedTemplate);
+    when(mustache.render).calledWith(template, {dualMode: false, cli: false}).thenReturn(renderedTemplate);
 
     await scaffoldConfig({projectRoot, dialect: dialects.ESM});
 
@@ -41,7 +41,7 @@ describe('config scaffolder', () => {
 
   it('should adjust for CLI projects', async () => {
     const dialect = any.word();
-    when(mustache.render).calledWith(template, {dualMode: true, cli: true}).mockReturnValue(renderedTemplate);
+    when(mustache.render).calledWith(template, {dualMode: true, cli: true}).thenReturn(renderedTemplate);
 
     expect(await scaffoldConfig({projectRoot, dialect, projectType: projectTypes.CLI})).toEqual({
       dependencies: {javascript: {development: ['@rollup/plugin-json', 'rollup-plugin-executable']}}
