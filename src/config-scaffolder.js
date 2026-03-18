@@ -12,7 +12,7 @@ function determineExtensionFor({dialect}) {
   return 'mjs';
 }
 
-export default async function ({projectRoot, dialect, projectType}) {
+export default async function scaffoldConfig({projectRoot, dialect, projectType}) {
   await fs.writeFile(
     `${projectRoot}/rollup.config.${(determineExtensionFor({dialect}))}`,
     mustache.render(
