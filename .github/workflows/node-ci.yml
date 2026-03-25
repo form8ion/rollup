@@ -50,6 +50,7 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           flags: unit
           report_type: coverage
+          override_branch: ${{ github.head_ref || github.ref_name }}
   release:
     needs:
       - verify
