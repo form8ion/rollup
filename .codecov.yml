@@ -1,2 +1,5 @@
+codecov:
+  branch: master
+
 comment:
   layout: reach,diff,flags,tree
