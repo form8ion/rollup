@@ -5,8 +5,10 @@ export default defineConfig({
     globals: true,
     restoreMocks: true,
     coverage: {
-      provider: 'v8',
-      include: ['src/**']
+      provider: "v8",
+      reporter: ["lcov", "text-summary", "html"],
+      include: ["src/**"],
+      exclude: ["src/**/index.js"]
     }
   }
 });
