@@ -63,7 +63,7 @@
     "mustache": "^4.2.0"
   },
   "devDependencies": {
-    "@codecov/rollup-plugin": "2.0.0",
+    "@codecov/rollup-plugin": "2.0.1",
     "@cucumber/cucumber": "11.3.0",
     "@form8ion/commitlint-config": "2.0.11",
     "@form8ion/eslint-config": "7.1.0-beta.1",
